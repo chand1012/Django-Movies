@@ -4,6 +4,12 @@ default:
 run:
     docker compose up
 
+build:
+    docker compose build
+
+rebuild:
+    docker compose build --no-cache
+
 run-bg:
     docker compose up -d
 
