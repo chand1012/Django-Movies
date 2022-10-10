@@ -34,17 +34,17 @@ Now you're ready to develop!
 ### Viewing Logs
 
 ```sh
-just logs
+$ just logs
 ```
 
 ### Creating an Admin User
 
 ```sh
-just createsuperuser
+$ just createsuperuser
 ```
 
 ### Stopping the Application
 
 ```sh
-just stop
+$ just stop
 ```
