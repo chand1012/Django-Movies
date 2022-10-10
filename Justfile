@@ -1,7 +1,7 @@
 default:
     just --list
 
-run:
+run-fg:
     docker compose up
 
 build:
@@ -10,7 +10,7 @@ build:
 rebuild:
     docker compose build --no-cache
 
-run-bg:
+run:
     docker compose up -d
 
 stop:
@@ -24,3 +24,6 @@ createsuperuser:
 
 migrate:
     docker compose exec web python manage.py migrate
+
+logs:
+    docker compose logs -f
