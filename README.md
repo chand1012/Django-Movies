@@ -39,6 +39,8 @@ $ just logs
 
 ### Creating an Admin User
 
+**The app must be running before you can run this!!!!**
+
 ```sh
 $ just createsuperuser
 ```
@@ -47,4 +49,12 @@ $ just createsuperuser
 
 ```sh
 $ just stop
+```
+
+### Running manage.py
+
+**The app must be running before you can run this!!!!**
+
+```sh
+$ just manage <commands>
 ```
