@@ -17,7 +17,9 @@ stop:
     docker compose down
 
 rm:
-    docker compose rm
+    docker compose rm --force
+
+clean: rm
 
 # If you need to execute commands in the container, use the following first.
 console container:
