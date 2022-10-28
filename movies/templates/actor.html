@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Actor | {{ actor.first_name }} {{ actor.last_name }}</title>
+    <link rel="stylesheet" href="https://unpkg.com/boltcss/bolt.css" />
+    <style>
+      body {
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>{{ actor.first_name }} {{ actor.last_name }}</h1>
+      <table>
+      <thead>
+        <tr>
+          <th>Movie</th>
+          <th>Release Date</th>
+          <th>View</th>
+        </tr>
+        {% for movie in movies %}
+        <tr>
+          <td>{{ movie.title }}</td>
+          <td>{{ movie.release_date }}</td>
+          <td><a href="/movie/{{ movie.movie_id }}">View</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
+</html>

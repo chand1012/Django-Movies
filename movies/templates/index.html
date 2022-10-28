@@ -8,21 +8,29 @@
         display: flex;
         justify-content: center;
       }
+
+      .nav-link {
+        color: white;
+        padding: 0.5rem;
+      }
     </style>
   </head>
   <body>
     <div>
+      <div>
+        <a href="/movies" class="nav-link">Movies</a>
+        <a href="/actors" class="nav-link">Actors</a>
+      </div>
       <h1>Movies</h1>
       <table>
         <thead>
-          <td>DB ID</td>
-          <td>Title</td>
-          <td>Release Date</td>
-          <td>Poster</td>
+          <th>Title</th>
+          <th>Release Date</th>
+          <th>Poster</th>
+          <th>View</th>
         </thead>
-        {% for item in objs %}
+        {% for item in movies %}
         <tr>
-          <td>{{ item.movie_id }}</td>
           <td>{{ item.title }}</td>
           <td>{{ item.release_date }}</td>
           <td><img src="{{ item.image }}" /></td>
