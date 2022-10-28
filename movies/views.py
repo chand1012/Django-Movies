@@ -1,10 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+
+from movies.models import Movies
 
 def movie_list(request):
-    return render(request, 'index.html')
+    objs = Movies.objects.all()
+    return render(request, 'index.html', {'objs':objs})
 
-def movie_detail(request, pk):
-    return HttpResponse('Movie Detail')
+def movie_detail(request, movie_id):
+    obj = Movies.objects.get(movie_id=movie_id)
+    return render(request, 'movie.html', {'obj':obj})
 
 

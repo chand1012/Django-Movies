@@ -31,11 +31,13 @@ createsuperuser:
 migrate:
     docker compose exec web python manage.py migrate
 
-makemigrations app:
-    docker compose exec web python manage.py makemigrations {{app}}
+makemigrations app *options="":
+    docker compose exec web python manage.py makemigrations {{app}} {{options}}
 
 manage *command:
     docker compose exec web python manage.py {{command}}
 
 logs:
     docker compose logs -f
+
+start: run
