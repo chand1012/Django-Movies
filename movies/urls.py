@@ -27,4 +27,6 @@ urlpatterns = [
     path('actor/<int:actor_id>/', views.actor_details, name='actor_detail'),
     path("register", views.register_request, name="register"),
     path("login", views.login_request, name="login"),
+    path("logout", views.logout_request, name="logout"),
+    path("review/<int:movie_id>", views.review_request, name="review"),
 ]

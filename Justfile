@@ -22,7 +22,7 @@ rm:
 clean: rm
 
 # If you need to execute commands in the container, use the following first.
-console container:
+console container="web":
     docker compose exec {{container}} bash
 
 createsuperuser:
@@ -41,3 +41,5 @@ logs:
     docker compose logs -f
 
 start: run
+
+init: run migrate createsuperuser
