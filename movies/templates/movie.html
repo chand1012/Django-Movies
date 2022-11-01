@@ -32,6 +32,22 @@
           {% endfor %}
         </tbody>
       </table>
+      <h2>Reviews</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for review in reviews %}
+          <tr>
+            <td>{{ review.username }}</td>
+            <td>{{ review.rating }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
     </div>
   </body>
 </html>

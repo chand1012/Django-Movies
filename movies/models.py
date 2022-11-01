@@ -5,6 +5,8 @@ from django.db import models
 
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=50)
+    movie = models.ForeignKey('Movies', on_delete=models.CASCADE)
     rating = models.IntegerField()
 
     def __str__(self):
