@@ -15,7 +15,7 @@ class Review(models.Model):
 class Movies(models.Model):
     movie_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=400)
-    release_date = models.DateField()
+    release_date = models.CharField(max_length=20)
     image = models.URLField()
     rating = models.ManyToManyField(Review)
 
