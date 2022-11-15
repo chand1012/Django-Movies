@@ -43,3 +43,13 @@ logs:
 start: run
 
 init: run migrate createsuperuser
+
+get-data:
+    wget https://datasets.imdbws.com/name.basics.tsv.gz -O actors.tsv.gz
+    wget https://datasets.imdbws.com/title.basics.tsv.gz -O movies.tsv.gz
+    gunzip actors.tsv.gz
+    gunzip movies.tsv.gz
+
+clear-data:
+    rm actors.tsv
+    rm movies.tsv
