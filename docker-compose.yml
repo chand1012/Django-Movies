@@ -14,6 +14,8 @@ services:
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
+    env_file:
+      - .env
     volumes:
       - .:/app
     ports:
@@ -22,5 +24,6 @@ services:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      - MOVIE_DB_KEY
     depends_on:
       - db
