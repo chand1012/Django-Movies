@@ -10,7 +10,7 @@ class Review(models.Model):
     rating = models.IntegerField()
 
     def __str__(self):
-        return str(self.title)
+        return str(self.username + " " + str(self.movie) + " " + str(self.rating))
 
 class Movies(models.Model):
     movie_id = models.AutoField(primary_key=True)
@@ -18,9 +18,10 @@ class Movies(models.Model):
     release_date = models.CharField(max_length=20)
     image = models.URLField()
     rating = models.ManyToManyField(Review)
+    imdb_id = models.CharField(max_length=20, null=True)
 
     def __str__(self):
-        return str(self.title)
+        return str(self.title + " " + self.release_date)
 
 class Actors(models.Model):
     first_name = models.CharField(max_length=100)
@@ -29,4 +30,4 @@ class Actors(models.Model):
     movies = models.ManyToManyField(Movies)
 
     def __str__(self):
-        return str(self.title)
+        return str(self.first_name + " " + self.last_name)

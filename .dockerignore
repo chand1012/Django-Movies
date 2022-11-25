@@ -3,3 +3,4 @@ data
 .env
 actors.tsv
 movies.tsv
+*.tsv.gz

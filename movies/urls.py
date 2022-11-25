@@ -21,12 +21,15 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('movies', views.movie_list, name='movie_list'),
-    path('actors', views.actors_list, name='actor_list'),
+    path('movies/', views.index, name='movie_list_plain'),
+    path('movies/<int:page>', views.movie_list, name='movie_list'),
+    path('actors/', views.actor_redirect, name='actor_list'),
+    path('actors/<int:page>', views.actors_list, name='actor_list'),
     path('movie/<int:movie_id>/', views.movie_detail, name='movie_detail'),
     path('actor/<int:actor_id>/', views.actor_details, name='actor_detail'),
     path("register", views.register_request, name="register"),
     path("login", views.login_request, name="login"),
     path("logout", views.logout_request, name="logout"),
     path("review/<int:movie_id>", views.review_request, name="review"),
+    path("poster/<str:imdb_id>", views.get_poster, name="poster"),
 ]

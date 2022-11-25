@@ -2,14 +2,17 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.paginator import Paginator
+from django.http import HttpResponseNotFound
 
 from movies.forms.register import NewUserForm
 from movies.models import Actors, Movies, Review
+from movies.util.moviedb import get_movie_poster_url
 
 
-def movie_list(request):
-    movies = Movies.objects.all()
-    return render(request, 'index.html', {'movies':movies})
+def movie_list(request, page=1):
+    pages = Paginator(Movies.objects.all(), 10)
+    return render(request, 'index.html', {'movies':pages.page(page)})
 
 def movie_detail(request, movie_id):
     movie = Movies.objects.get(movie_id=movie_id)
@@ -22,12 +25,15 @@ def actor_details(request, actor_id):
     movies = Movies.objects.filter(actors=actor).all()
     return render(request, 'actor.html', {'actor':actor, 'movies':movies})
 
-def actors_list(request):
-    actors = Actors.objects.all()
-    return render(request, 'actors.html', {'actors':actors})
+def actors_list(request, page=1):
+    pages = Paginator(Actors.objects.all(), 20)
+    return render(request, 'actors.html', {'actors':pages.page(page)})
 
 def index(request):
-    return redirect('movie_list')
+    return redirect('movie_list', 1)
+
+def actor_redirect(request):
+	return redirect('actor_list', 1)
 
 def register_request(request):
 	if request.method == "POST":
@@ -74,3 +80,9 @@ def review_request(request, movie_id):
 		review.save()
 		return redirect('movie_detail', movie_id=movie_id)
 	return redirect('movie_detail', movie_id=movie_id)
+
+def get_poster(request, imdb_id):
+	poster_url = get_movie_poster_url(imdb_id)
+	if poster_url:
+		return redirect(poster_url)
+	return HttpResponseNotFound()

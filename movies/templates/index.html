@@ -12,7 +12,7 @@
   <tr>
     <td>{{ item.title }}</td>
     <td>{{ item.release_date }}</td>
-    <td><img src="{{ item.image }}" /></td>
+    <td><img style="max-width: 25%" alt="Not found" src="/poster/{{ item.imdb_id }}" /></td>
     <td><a href="/movie/{{ item.movie_id }}">View</a></td>
   </tr>
   {% endfor %}
