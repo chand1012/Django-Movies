@@ -45,8 +45,8 @@ start: run
 init: run migrate createsuperuser
 
 get-data:
-    wget https://datasets.imdbws.com/name.basics.tsv.gz -O actors.tsv.gz
-    wget https://datasets.imdbws.com/title.basics.tsv.gz -O movies.tsv.gz
+    wget https://cdn.discordapp.com/attachments/1017871632301309973/1042969879491391578/new_actors.tsv.gz -O actors.tsv.gz
+    wget https://cdn.discordapp.com/attachments/1017871632301309973/1042969513114751107/new_movies.tsv.gz -O movies.tsv.gz
     gunzip actors.tsv.gz
     gunzip movies.tsv.gz
 
