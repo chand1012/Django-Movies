@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponseNotFound
 
 from movies.forms.register import NewUserForm
-from movies.models import Actors, Movies, Review
+from movies.models import Actors, Movies, Review, ActorMovies
 from movies.util.moviedb import get_movie_poster_url
 
 
@@ -15,15 +15,22 @@ def movie_list(request, page=1):
     return render(request, 'index.html', {'movies':pages.page(page)})
 
 def movie_detail(request, movie_id):
-    movie = Movies.objects.get(movie_id=movie_id)
-    actors = Actors.objects.filter(movies=movie)
-    reviews = Review.objects.filter(movie=movie)
-    return render(request, 'movie.html', {'movie':movie, 'actors':actors, 'reviews': reviews})
+	movie = Movies.objects.get(movie_id=movie_id)
+	actor_ids = ActorMovies.objects.filter(imdb_id=movie.imdb_id).all()
+	actors = Actors.objects.filter(actor_id__in=actor_ids).all()
+	reviews = Review.objects.filter(movie=movie)
+	return render(request, 'movie.html', {'movie':movie, 'actors':actors, 'reviews': reviews})
 
 def actor_details(request, actor_id):
-    actor = Actors.objects.get(actor_id=actor_id)
-    movies = Movies.objects.filter(actors=actor).all()
-    return render(request, 'actor.html', {'actor':actor, 'movies':movies})
+	actor = Actors.objects.get(actor_id=actor_id)
+	am = ActorMovies.objects.filter(actor_id=actor_id).all()
+	movies = []
+	for x in am:
+		try:
+			movies.append(Movies.objects.get(imdb_id=x.imdb_id))
+		except:
+			pass
+	return render(request, 'actor.html', {'actor':actor, 'movies':movies})
 
 def actors_list(request, page=1):
     pages = Paginator(Actors.objects.all(), 20)
