@@ -53,3 +53,11 @@ get-data:
 clear-data:
     rm actors.tsv
     rm movies.tsv
+
+dump:
+    pg_dump --username=postgres --host=localhost --port=5432 --dbname=postgres --file=movies.sql
+    gzip movies.sql
+
+restore:
+    gunzip movies.sql.gz
+    psql --username=postgres --host=localhost --port=5432 --dbname=postgres --file=movies.sql
