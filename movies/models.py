@@ -23,11 +23,18 @@ class Movies(models.Model):
     def __str__(self):
         return str(self.title + " " + self.release_date)
 
+class ActorMovies(models.Model):
+    imdb_id = models.CharField(max_length=20, null=True)
+    actor = models.ForeignKey('Actors', on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+
+    def __str__(self):
+        return str(self.imdb_id + " " + self.actor)
+
 class Actors(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     actor_id = models.AutoField(primary_key=True)
-    movies = models.ManyToManyField(Movies)
 
     def __str__(self):
         return str(self.first_name + " " + self.last_name)
