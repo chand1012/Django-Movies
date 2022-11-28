@@ -12,10 +12,16 @@
   <tr>
     <td>{{ item.title }}</td>
     <td>{{ item.release_date }}</td>
-    <td><img style="max-width: 25%" alt="Not found" src="/poster/{{ item.imdb_id }}" /></td>
+    <td><img style="max-height: 10rem" alt="Not found" src="/poster/{{ item.imdb_id }}" /></td>
     <td><a href="/movie/{{ item.movie_id }}">View</a></td>
   </tr>
   {% endfor %}
 </table>
+
+<div class="nav-bar">
+  <a class="nav-link" href="/movies/{{ prev_page }}">Prev</a>
+  <a class="nav-link" href="/movies/{{ next_page }}">Next</a>
+</div>
+
 
 {% endblock %}

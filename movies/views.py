@@ -13,8 +13,12 @@ from movies.util.parse import parse_movies
 
 
 def movie_list(request, page=1):
-    pages = Paginator(Movies.objects.all(), 10)
-    return render(request, 'index.html', {'movies':pages.page(page)})
+	pages = Paginator(Movies.objects.all().order_by('release_date'), 10)
+	prev_page = page - 1
+	next_page = page + 1
+	if page == 1:
+		prev_page = 1
+	return render(request, 'index.html', {'movies':pages.page(page), 'prev_page': prev_page, 'next_page': next_page})
 
 def movie_detail(request, movie_id):
 	movie = Movies.objects.get(movie_id=movie_id)
@@ -30,13 +34,17 @@ def actor_details(request, actor_id):
 	for x in am:
 		try:
 			movies.append(Movies.objects.get(imdb_id=x.imdb_id))
-		except:
+		except Movies.DoesNotExist:
 			pass
 	return render(request, 'actor.html', {'actor':actor, 'movies':movies})
 
 def actors_list(request, page=1):
-    pages = Paginator(Actors.objects.all(), 20)
-    return render(request, 'actors.html', {'actors':pages.page(page)})
+	pages = Paginator(Actors.objects.all().order_by('actor_id'), 20)
+	prev_page = page - 1
+	next_page = page + 1
+	if page == 1:
+		prev_page = 1
+	return render(request, 'actors.html', {'actors':pages.page(page), 'prev_page': prev_page, 'next_page': next_page})
 
 def index(request):
     return redirect('movie_list', 1)
