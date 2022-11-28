@@ -51,4 +51,11 @@
 </form>
 {% endif %}
 
+{% if user.is_superuser %}
+<form action="/delete?movie_id={{movie.movie_id}}" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="Delete" />
+</form>
+{% endif %}
+
 {% endblock %}

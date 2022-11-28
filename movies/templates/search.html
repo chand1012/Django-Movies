@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %} Search | Screening {% endblock %} {% block body %}
+<h1>Search</h1>
+<form action="/search" method="get">
+    <input type="text" name="q" placeholder="Search">
+    <input type="submit" value="Search">
+</form>
+<div class="search-results">
+    {% if query %}
+    <table>
+  <thead>
+    <th>Title</th>
+    <th>Release Date</th>
+    <th>Poster</th>
+    <th>View</th>
+  </thead>
+        {% for item in results %}
+  <tr>
+    <td>{{ item.title }}</td>
+    <td>{{ item.release_date }}</td>
+    <td><img style="max-width: 25%" alt="Not found" src="/poster/{{ item.imdb_id }}" /></td>
+    <td><a href="/movie/{{ item.movie_id }}">View</a></td>
+  </tr>
+  {% endfor %}
+    </table>
+    {% endif %}
+</div>
+{% endblock %}

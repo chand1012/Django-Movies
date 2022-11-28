@@ -32,4 +32,7 @@ urlpatterns = [
     path("logout", views.logout_request, name="logout"),
     path("review/<int:movie_id>", views.review_request, name="review"),
     path("poster/<str:imdb_id>", views.get_poster, name="poster"),
+    path("search", views.search_movies, name="search"),
+    path("add", views.add_movie, name="add"),
+    path("delete", views.delete_movie, name="delete"),
 ]

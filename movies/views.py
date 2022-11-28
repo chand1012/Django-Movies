@@ -4,10 +4,12 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.paginator import Paginator
 from django.http import HttpResponseNotFound
+from django.db import connection
 
 from movies.forms.register import NewUserForm
 from movies.models import Actors, Movies, Review, ActorMovies
 from movies.util.moviedb import get_movie_poster_url
+from movies.util.parse import parse_movies
 
 
 def movie_list(request, page=1):
@@ -93,3 +95,41 @@ def get_poster(request, imdb_id):
 	if poster_url:
 		return redirect(poster_url)
 	return HttpResponseNotFound()
+
+def search_movies(request):
+	movies = []
+	query = False
+	if request.GET.get('q'):
+		query = True
+		with connection.cursor() as cursor:
+			cursor.execute("SELECT * FROM search_movies(LOWER(%s)) ORDER BY release_date ASC", [request.GET['q']])
+			movies = cursor.fetchall()
+	movies = parse_movies(movies)
+	print(movies)
+	return render(request, 'search.html', {'results':movies, 'query':query})
+	
+def add_movie(request):
+	if not request.user.is_authenticated:
+		messages.error(request, "You must be logged in to add a movie.")
+		return redirect("login")
+	if request.method == "POST":
+		with connection.cursor() as cursor:
+			cursor.execute("CALL insert_movie(%s, %s, %s)", [request.POST['title'], request.POST['release_date'], request.POST['imdb_id']])
+			messages.info(request, "Movie added successfully.")
+	return render(request, 'add.html')
+
+def delete_movie(request):
+	if not request.user.is_authenticated:
+		messages.error(request, "You must be logged in to delete a movie.")
+		return redirect("login")
+	if not request.user.is_superuser:
+		messages.error(request, "You must be an admin to delete a movie.")
+		return redirect("index")
+	if request.GET.get('movie_id'):
+		movie = Movies.objects.get(movie_id=request.GET['movie_id'])
+		movie.delete()
+		messages.info(request, "Movie deleted successfully.")
+	else:
+		messages.error(request, "No movie selected.")
+		
+	return redirect('movie_list', 1)
