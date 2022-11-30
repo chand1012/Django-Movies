@@ -93,6 +93,10 @@ def review_request(request, movie_id):
 		return redirect("login")
 	movie = Movies.objects.get(movie_id=movie_id)
 	if request.method == "POST":
+		reviewExists = Review.objects.filter(movie=movie, user=request.user).exists()
+		if reviewExists:
+			messages.error(request, "You have already reviewed this movie.")
+			return redirect("movie_detail", movie_id)
 		review = Review.objects.create(movie=movie, username=request.user.username, rating=int(request.POST['rating'][0]))
 		review.save()
 		return redirect('movie_detail', movie_id=movie_id)
