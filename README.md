@@ -25,9 +25,12 @@ First, clone the repo. After, open the repo in your preferred text editor and op
 Then you can run the application for the first time.
 
 ```sh
+$ just get-data
 $ just run
 $ just migrate
 ```
+
+This will take about 3 hours to initialize. Please be patient.
 
 Now you're ready to develop!
 
